@@ -225,8 +225,11 @@ namespace CGauge
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             base.OnPaint(e);
-
-            __Image = new Bitmap(this.Size.Width, this.Size.Height);
+            
+            if((__Image.Size.Width != this.Size.Width) || (__Image.Size.Height != this.Size.Height))
+            {
+                __Image = new Bitmap(this.Size.Width, this.Size.Height);
+            }
 
             __PositionX = (this.Size.Width / 2) - (__Width / 2);
             __PositionY = (this.Size.Height / 2) - (__Height / 2);
