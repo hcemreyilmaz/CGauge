@@ -212,6 +212,8 @@ namespace CGauge
 
             __Font_Value = new Font("Calibri", 22);
             __Font_Unit = new Font("Calibri", 14, FontStyle.Bold);
+
+            this.DoubleBuffered = true;
         }
 
         public class PaintEventArgs : EventArgs
