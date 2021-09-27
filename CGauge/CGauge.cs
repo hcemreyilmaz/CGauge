@@ -225,6 +225,8 @@ namespace CGauge
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             base.OnPaint(e);
+
+            bool ValueOverflow = false;
             
             if((__Image.Size.Width != this.Size.Width) || (__Image.Size.Height != this.Size.Height))
             {
@@ -237,8 +239,16 @@ namespace CGauge
             __ThresholdAlarm = __ThresholdAlarmPercent * __SweepAngle / 100.0F;
             __ThresholdWarning = __ThresholdWarningPercent * __SweepAngle / 100.0F;
 
-            if (__Value < this.__ValueMin) __Value = this.__ValueMin;
-            if (__Value > this.__ValueMax) __Value = this.__ValueMax;
+            if (__Value < this.__ValueMin)
+            {
+                __Value = this.__ValueMin;
+                ValueOverflow = true;
+            }
+            if (__Value > this.__ValueMax)
+            {
+                __Value = this.__ValueMax;
+                ValueOverflow = true;
+            }
 
             // Decisions for fill color with thresholds
             Color tFill = this.__Fill;
@@ -268,7 +278,15 @@ namespace CGauge
             sf.Alignment = StringAlignment.Center;
             sf.LineAlignment = StringAlignment.Center;
 
-            e.Graphics.DrawString(__Value.ToString(), __Font_Value, Brushes.Black, this.__PositionX + this.__Width / 2, this.__PositionY + this.__Height / 2, sf);
+            if(ValueOverflow)
+            {
+                e.Graphics.DrawString("***", __Font_Value, Brushes.Black, this.__PositionX + this.__Width / 2, this.__PositionY + this.__Height / 2, sf);
+            }
+            else
+            {
+                e.Graphics.DrawString(__Value.ToString(), __Font_Value, Brushes.Black, this.__PositionX + this.__Width / 2, this.__PositionY + this.__Height / 2, sf);
+            }
+
             e.Graphics.DrawString(__Unit, __Font_Unit, Brushes.Gray, this.__PositionX + this.__Width / 2, this.__PositionY + this.__Height / 2 + this.__Height / 5, sf);
         }
 
