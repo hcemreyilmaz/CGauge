@@ -298,5 +298,46 @@ namespace CGauge
 
             return tResult;
         }
+
+        private void CGauge_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                rightClickMinimumTextbox.Text = ValueMin.ToString();
+                rightClickMaximumTextbox.Text = ValueMax.ToString();
+                rightClickWarningTextbox.Text = (ThresholdWarning / 100).ToString("0%");
+                rightClickAlarmTextbox.Text = (ThresholdAlarm / 100).ToString("0%");
+
+                rightClickMenu.Show(this, new Point(e.X, e.Y));
+            }
+        }
+
+        private void btMinimumApply_Click(object sender, EventArgs e)
+        {
+            int Val;
+
+            if (int.TryParse(rightClickMinimumTextbox.Text, out Val)) ValueMin = Val;
+        }
+
+        private void btMaximumApply_Click(object sender, EventArgs e)
+        {
+            int Val;
+
+            if (int.TryParse(rightClickMaximumTextbox.Text, out Val)) ValueMax = Val;
+        }
+
+        private void btWarningApply_Click(object sender, EventArgs e)
+        {
+            int Val;
+
+            if (int.TryParse(rightClickWarningTextbox.Text, out Val)) ThresholdWarning = Val;
+        }
+
+        private void btAlarmApply_Click(object sender, EventArgs e)
+        {
+            int Val;
+
+            if (int.TryParse(rightClickAlarmTextbox.Text, out Val)) ThresholdAlarm = Val;
+        }
     }
 }
